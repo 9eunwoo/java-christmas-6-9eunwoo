@@ -24,4 +24,14 @@ public class Order {
                 .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
                 .sum();
     }
+
+    public void finalizeOrder() {
+        if (isOrderOverLimit()) {
+            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
+        }
+    }
+
+    private boolean isOrderOverLimit() {
+        return orderItems.values().stream().mapToInt(Integer::intValue).sum() > 20;
+    }
 }
