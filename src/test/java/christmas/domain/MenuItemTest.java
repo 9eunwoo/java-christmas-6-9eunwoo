@@ -2,40 +2,46 @@ package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Locale;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.api.Test;
 
 public class MenuItemTest {
     @DisplayName("메뉴 각 항목의 이름, 가격, 카테고리를 정확히 반환하는지 테스트")
-    @ParameterizedTest
-    @EnumSource(MenuItem.class)
-    public void givenMenuItem_whenGetDetails_thenCorrectDetailsReturned(MenuItem menuItem) {
-        // when
-        String name = menuItem.getName();
-        int price = menuItem.getPrice();
-        Category category = menuItem.getCategory();
+    @Test
+    public void givenMenuItem_whenGetDetails_thenCorrectDetailsReturned() {
+        // given
+        String expected = """
+                <애피타이저>
+                양송이수프(6,000), 타파스(5,500), 시저샐러드(8,000)
 
+                <메인>
+                티본스테이크(55,000), 바비큐립(54,000), 해산물파스타(35,000), 크리스마스파스타(25,000)
+
+                <디저트>
+                초코케이크(15,000), 아이스크림(5,000)
+
+                <음료>
+                제로콜라(3,000), 레드와인(60,000), 샴페인(25,000)
+                    """;
+        // when
+        StringBuilder sb = new StringBuilder();
+        for (Category category : Category.values()) {
+            sb.append("<").append(category.getName()).append(">\n");
+            for (MenuItem item : MenuItem.values()) {
+                if (item.getCategory() == category) {
+                    String formattedPrice = String.format(Locale.KOREA, "%,d", item.getPrice());
+                    sb.append(item.getName()).append("(").append(formattedPrice).append("), ");
+                }
+            }
+            // 마지막에 나오는 ", "를 제거하기 위해 길이에서 2를 뺌
+            int length = sb.length();
+            sb.delete(length - 2, length).append("\n\n");
+        }
+        // 마지막에 나오는 "\n"를 제거하기 위해 길이에서 1을 뺌
+        sb.delete(sb.length() - 1, sb.length());
+        String actual = sb.toString();
         // then
-        if (menuItem == MenuItem.MUSHROOM_SOUP) {
-            assertThat(name).isEqualTo("양송이수프");
-            assertThat(price).isEqualTo(6_000);
-            assertThat(category).isEqualTo(Category.APPETIZER);
-        }
-        if (menuItem == MenuItem.TBONE_STEAK) {
-            assertThat(name).isEqualTo("티본스테이크");
-            assertThat(price).isEqualTo(55_000);
-            assertThat(category).isEqualTo(Category.MAIN);
-        }
-        if (menuItem == MenuItem.CHOCO_CAKE) {
-            assertThat(name).isEqualTo("초코케이크");
-            assertThat(price).isEqualTo(15_000);
-            assertThat(category).isEqualTo(Category.DESSERT);
-        }
-        if (menuItem == MenuItem.ZERO_COLA) {
-            assertThat(name).isEqualTo("제로콜라");
-            assertThat(price).isEqualTo(3_000);
-            assertThat(category).isEqualTo(Category.BEVERAGE);
-        }
+        assertThat(actual).isEqualTo(expected);
     }
 }
