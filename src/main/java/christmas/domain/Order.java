@@ -12,7 +12,7 @@ public class Order {
     }
 
     public void addItem(MenuItem item, int quantity) {
-        if (orderItems.containsKey(item)) {
+        if (orderItems.containsKey(item) || quantity <= 0) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }
         this.orderItems.put(item, quantity);
