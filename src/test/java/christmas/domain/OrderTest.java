@@ -97,4 +97,20 @@ public class OrderTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
+
+    @DisplayName("음료를 포함한 다른 메뉴를 주문한 경우, 정상적으로 주문을 완료하는지 테스트")
+    @Test
+    public void finalizeOrder_ShouldSuccessfullyFinalizeOrder_WhenBeverageAndOtherItemsOrdered() {
+        // given
+        Order order = new Order();
+        MenuItem item = MenuItem.ZERO_COLA;
+        int quantity = 19;
+        order.addItem(item, quantity);
+        item = MenuItem.MUSHROOM_SOUP;
+        quantity = 1;
+        order.addItem(item, quantity);
+
+        // when & then
+        assertThatCode(() -> order.finalizeOrder()).doesNotThrowAnyException();
+    }
 }
