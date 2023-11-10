@@ -36,8 +36,21 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.addItem(item, quantity))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
 
+    @DisplayName("메뉴의 수량이 0개 이하일 경우, 예외를 발생시키는지 테스트")
+    @Test
+    public void addItem_ShouldThrowException_WhenQuantityIsZeroOrNegative() {
+        // given
+        Order order = new Order();
+        MenuItem item = MenuItem.MUSHROOM_SOUP;
+        int quantity = 0;
+
+        // when & then
+        assertThatThrownBy(() -> order.addItem(item, quantity))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+    }
 }
