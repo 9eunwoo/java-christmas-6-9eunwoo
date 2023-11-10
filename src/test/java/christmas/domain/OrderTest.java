@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.Constant.Message;
@@ -67,5 +68,18 @@ public class OrderTest {
         assertThatThrownBy(() -> order.finalizeOrder())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+    }
+
+    @DisplayName("주문한 메뉴의 총 수량이 20개 이하일 경우, 정상적으로 주문을 완료하는지 테스트")
+    @Test
+    public void finalizeOrder_ShouldSuccessfullyFinalizeOrder_WhenTotalQuantityIsLessThanTwenty() {
+        // given
+        Order order = new Order();
+        MenuItem item = MenuItem.MUSHROOM_SOUP;
+        int quantity = 20;
+        order.addItem(item, quantity);
+
+        // when & then
+        assertThatCode(() -> order.finalizeOrder()).doesNotThrowAnyException();
     }
 }
