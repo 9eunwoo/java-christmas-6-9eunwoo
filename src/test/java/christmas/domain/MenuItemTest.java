@@ -57,4 +57,16 @@ public class MenuItemTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
+
+    @DisplayName("메뉴 이름을 입력할 경우, 해당 메뉴를 정확히 반환하는지 테스트")
+    @Test
+    void givenValidName_whenGetByName_thenCorrectMenuItemReturned() {
+        // given
+        String validName = "시저샐러드";
+        MenuItem expected = MenuItem.CAESAR_SALAD;
+        // when
+        MenuItem actual = MenuItem.getByName(validName);
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
