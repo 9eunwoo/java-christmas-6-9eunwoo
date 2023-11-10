@@ -120,7 +120,6 @@ public class OrderTest {
     @Test
     void getTotalQuantityByCategory_ShouldCorrectlyCalculateTotalQuantityByCategory() {
         // given
-        MenuItem item;;
         int totalAppetizerQuantity = 3;
         order.addItem(MenuItem.MUSHROOM_SOUP, 2);
         order.addItem(MenuItem.TAPAS, 1);

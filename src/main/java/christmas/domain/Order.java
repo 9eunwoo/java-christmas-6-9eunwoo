@@ -25,6 +25,14 @@ public class Order {
                 .sum();
     }
 
+    public int getTotalQuantityByCategory(Category category) {
+        return orderItems.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().getCategory() == category)
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
     public void finalizeOrder() {
         if (isOrderOverLimit()) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
