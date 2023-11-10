@@ -13,7 +13,7 @@ public class EventBadgeTest {
         int totalBenefit = 20_000;
         EventBadge expectedEventBadge = EventBadge.SANTA;
         // when
-        EventBadge actualEventBadge = EventBadge.getEventBadge(totalBenefit);
+        EventBadge actualEventBadge = EventBadge.fromTotalBenefit(totalBenefit);
         // then
         assertThat(actualEventBadge).isEqualTo(expectedEventBadge);
     }   
