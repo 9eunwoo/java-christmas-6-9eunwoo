@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Order {
+    private static final int MAX_ORDER_QUANTITY = 20;
     private final Map<MenuItem, Integer> orderItems;
 
     public Order() {
@@ -34,16 +35,13 @@ public class Order {
     }
 
     public void finalizeOrder() {
-        if (isOrderOverLimit()) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
-        }
-        if (isBeverageOnly()) {
+        if (isOrderOverLimit() || isBeverageOnly()) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }
     }
 
     private boolean isOrderOverLimit() {
-        return orderItems.values().stream().mapToInt(Integer::intValue).sum() > 20;
+        return orderItems.values().stream().mapToInt(Integer::intValue).sum() > MAX_ORDER_QUANTITY;
     }
 
     private boolean isBeverageOnly() {
