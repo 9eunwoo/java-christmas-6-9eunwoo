@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.Constant.Message;
+import christmas.constant.Message;
 import java.util.EnumMap;
 import java.util.Map;
 

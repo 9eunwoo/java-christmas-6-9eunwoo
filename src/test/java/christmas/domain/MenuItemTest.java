@@ -3,15 +3,16 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.Constant.Message;
 import java.util.Locale;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import christmas.constant.Message;
+
 public class MenuItemTest {
     @DisplayName("메뉴 각 항목의 이름, 가격, 카테고리를 정확히 반환하는지 테스트")
     @Test
-    public void givenMenuItem_whenGetDetails_thenCorrectDetailsReturned() {
+    void givenMenuItem_whenGetDetails_thenCorrectDetailsReturned() {
         // given
         String expected = """
                 <애피타이저>

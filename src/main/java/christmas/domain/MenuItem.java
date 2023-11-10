@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.Constant.Message;
+import christmas.constant.Message;
 
 public enum MenuItem {
     // 애피타이저
