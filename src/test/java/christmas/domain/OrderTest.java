@@ -3,6 +3,7 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import christmas.Constant.Message;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,7 @@ public class OrderTest {
         // when & then
         assertThatThrownBy(() -> order.addItem(item, quantity))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
 
 }

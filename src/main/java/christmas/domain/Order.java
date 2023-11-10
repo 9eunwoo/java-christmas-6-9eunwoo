@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.Constant.Message;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class Order {
 
     public void addItem(MenuItem item, int quantity) {
         if (orderItems.containsKey(item)) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }
         this.orderItems.put(item, quantity);
     }
