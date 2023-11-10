@@ -1,7 +1,9 @@
 package christmas.domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.Constant.Message;
 import java.util.Locale;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,5 +45,16 @@ public class MenuItemTest {
         String actual = sb.toString();
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("메뉴에 없는 메뉴 이름을 입력할 경우, 예외를 발생시키는지 테스트")
+    @Test
+    void givenInvalidName_whenGetByName_thenThrowException() {
+        // given
+        String invalidName = "존재하지 않는 메뉴 이름";
+        // when & then
+        assertThatThrownBy(() -> MenuItem.getByName(invalidName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
 }
