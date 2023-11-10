@@ -82,4 +82,19 @@ public class OrderTest {
         // when & then
         assertThatCode(() -> order.finalizeOrder()).doesNotThrowAnyException();
     }
+
+    @DisplayName("음료만 주문한 경우, 예외를 발생시키는지 테스트")
+    @Test
+    public void finalizeOrder_ShouldThrowException_WhenOnlyBeverageOrdered() {
+        // given
+        Order order = new Order();
+        MenuItem item = MenuItem.ZERO_COLA;
+        int quantity = 20;
+        order.addItem(item, quantity);
+
+        // when & then
+        assertThatThrownBy(() -> order.finalizeOrder())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+    }
 }
