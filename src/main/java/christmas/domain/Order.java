@@ -29,9 +29,16 @@ public class Order {
         if (isOrderOverLimit()) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }
+        if (isBeverageOnly()) {
+            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
+        }
     }
 
     private boolean isOrderOverLimit() {
         return orderItems.values().stream().mapToInt(Integer::intValue).sum() > 20;
+    }
+
+    private boolean isBeverageOnly() {
+        return orderItems.keySet().stream().allMatch(item -> item.getCategory() == Category.BEVERAGE);
     }
 }
