@@ -26,6 +26,7 @@ public class EventService {
                 .weekdayDiscount(DiscountPolicy.WEEKDAY_DISCOUNT.calculateDiscount(order, calendar))
                 .weekendDiscount(DiscountPolicy.WEEKEND_DISCOUNT.calculateDiscount(order, calendar))
                 .specialDiscount(DiscountPolicy.SPECIAL_DISCOUNT.calculateDiscount(order, calendar))
+                .totalDiscount(totalDiscount)
                 .giftItem(giftItem).totalBenefit(totalBenefit).eventBadge(EventBadge.fromTotalBenefit(totalBenefit))
                 .build();
     }

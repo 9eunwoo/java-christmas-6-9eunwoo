@@ -9,7 +9,6 @@ public class InputView {
     private final Pattern NON_ZERO_LEADING_NUMBER = Pattern.compile("^[1-9][0-9]*$");
     private final Pattern ORDER_FORM = Pattern.compile("^[가-힣]+-[1-9][0-9]*(,[가-힣]+-[1-9][0-9]*)*$");
     private final int YEAR = 2023;
-    private final int MONTH = 12;
 
     public int readDate() {
         while (true) {
@@ -18,7 +17,7 @@ public class InputView {
                 String userInput = Console.readLine();
                 validateNonZeroLeadingNumber(userInput);
                 int date = Integer.parseInt(userInput);
-                validateDate(YEAR, MONTH, date);
+                validateDate(YEAR, Calendar.DECEMBER, date);
                 return date;
             } catch (IllegalArgumentException exception) {
                 System.out.println(exception.getMessage());
@@ -41,7 +40,7 @@ public class InputView {
 
     private void validateNonZeroLeadingNumber(String userInput) {
         if (!NON_ZERO_LEADING_NUMBER.matcher(userInput).matches()) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
+            throw new IllegalArgumentException(Message.ERROR_INVALID_DATE.getMessage());
         }
     }
 

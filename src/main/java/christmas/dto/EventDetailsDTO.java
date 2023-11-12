@@ -13,6 +13,7 @@ public class EventDetailsDTO {
     private final int weekdayDiscount;
     private final int weekendDiscount;
     private final int specialDiscount;
+    private final int totalDiscount;
     private final int totalBenefit;
     private final EventBadge eventBadge;
 
@@ -24,6 +25,7 @@ public class EventDetailsDTO {
         this.weekdayDiscount = builder.weekdayDiscount;
         this.weekendDiscount = builder.weekendDiscount;
         this.specialDiscount = builder.specialDiscount;
+        this.totalDiscount = builder.totalDiscount;
         this.totalBenefit = builder.totalBenefit;
         this.eventBadge = builder.eventBadge;
     }
@@ -56,6 +58,10 @@ public class EventDetailsDTO {
         return specialDiscount;
     }
 
+    public int getTotalDiscount() {
+        return totalDiscount;
+    }
+
     public int getTotalBenefit() {
         return totalBenefit;
     }
@@ -73,6 +79,7 @@ public class EventDetailsDTO {
         private int weekdayDiscount = 0;
         private int weekendDiscount = 0;
         private int specialDiscount = 0;
+        private int totalDiscount = 0;
         private int totalBenefit = 0;
         private EventBadge eventBadge = EventBadge.NONE;
 
@@ -103,6 +110,11 @@ public class EventDetailsDTO {
 
         public Builder specialDiscount(int discount) {
             this.specialDiscount = discount;
+            return this;
+        }
+
+        public Builder totalDiscount(int discount) {
+            this.totalDiscount = discount;
             return this;
         }
 

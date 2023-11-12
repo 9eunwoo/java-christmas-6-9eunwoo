@@ -10,7 +10,6 @@ import java.util.Calendar;
 
 public class EventController {
     private final int YEAR = 2023;
-    private final int MONTH = 12;
     private final EventService eventService;
     private final OrderService orderService;
     private final InputView inputView;
@@ -27,7 +26,7 @@ public class EventController {
         outputView.printWelcomeMessage();
         int date = inputView.readDate();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(YEAR, MONTH, date);
+        calendar.set(YEAR, Calendar.DECEMBER, date);
         while (true) {
             try {
                 String orderInput = inputView.readOrder();

@@ -95,7 +95,7 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
 
@@ -121,7 +121,7 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
 

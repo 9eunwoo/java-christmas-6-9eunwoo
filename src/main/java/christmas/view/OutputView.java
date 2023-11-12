@@ -47,6 +47,22 @@ public class OutputView {
 
     private void printBenefits(EventDetailsDTO eventDetailsDTO) {
         System.out.printf("<혜택 내역>%n");
+        printDiscounts(eventDetailsDTO);
+        printGiftItemPrice(eventDetailsDTO);
+        if(isNoBenefit(eventDetailsDTO)) {
+            System.out.printf("없음%n%n");
+            return;
+        }
+        System.out.println();
+    }
+
+    private boolean isNoBenefit(EventDetailsDTO eventDetailsDTO) {
+        return eventDetailsDTO.getChristmasDDayDiscount() == 0 && eventDetailsDTO.getWeekdayDiscount() == 0
+                && eventDetailsDTO.getWeekendDiscount() == 0 && eventDetailsDTO.getSpecialDiscount() == 0
+                && eventDetailsDTO.getGiftItem() == GiftItem.NONE;
+    }
+
+    private void printDiscounts(EventDetailsDTO eventDetailsDTO) {
         if (eventDetailsDTO.getChristmasDDayDiscount() != 0) {
             System.out.printf(Locale.KOREA, "크리스마스 디데이 할인: -%,d원%n",
                     eventDetailsDTO.getChristmasDDayDiscount());
@@ -60,8 +76,6 @@ public class OutputView {
         if (eventDetailsDTO.getSpecialDiscount() != 0) {
             System.out.printf(Locale.KOREA, "특별 할인: -%,d원%n", eventDetailsDTO.getSpecialDiscount());
         }
-        printGiftItemPrice(eventDetailsDTO);
-        System.out.println();
     }
 
     private void printGiftItemPrice(EventDetailsDTO eventDetailsDTO) {
@@ -74,13 +88,17 @@ public class OutputView {
 
     private void printTotalBenefit(EventDetailsDTO eventDetailsDTO) {
         System.out.printf("<총혜택 금액>%n");
+        if (eventDetailsDTO.getTotalBenefit() == 0) {
+            System.out.printf("0원%n%n");
+            return;
+        }
         System.out.printf(Locale.KOREA, "-%,d원%n%n", eventDetailsDTO.getTotalBenefit());
     }
 
     private void printNetPrice(EventDetailsDTO eventDetailsDTO) {
         System.out.printf("<할인 후 예상 결제 금액>%n");
         System.out.printf(Locale.KOREA, "%,d원%n%n",
-                eventDetailsDTO.getTotalPrice() - eventDetailsDTO.getTotalBenefit());
+                eventDetailsDTO.getTotalPrice() - eventDetailsDTO.getTotalDiscount());
     }
 
     private void printEventBadge(EventDetailsDTO eventDetailsDTO) {
