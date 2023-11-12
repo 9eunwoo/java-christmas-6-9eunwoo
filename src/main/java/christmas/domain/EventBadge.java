@@ -1,15 +1,21 @@
 package christmas.domain;
 
 public enum EventBadge {
-    NONE(0),
-    STAR(5_000),
-    TREE(10_000),
-    SANTA(20_000);
+    NONE("없음", 0),
+    STAR("별", 5_000),
+    TREE("트리", 10_000),
+    SANTA("산타", 20_000);
 
+    private final String name;
     private final int threshold;
 
-    EventBadge(int threshold) {
+    EventBadge(String name, int threshold) {
+        this.name = name;
         this.threshold = threshold;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public static EventBadge fromTotalBenefit(int totalBenefit) {
