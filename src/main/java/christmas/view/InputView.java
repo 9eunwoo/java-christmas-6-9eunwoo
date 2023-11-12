@@ -7,18 +7,32 @@ import java.util.Calendar;
 
 public class InputView {
     private final Pattern NON_ZERO_LEADING_NUMBER = Pattern.compile("^[1-9][0-9]*$");
+    private final Pattern ORDER_FORM = Pattern.compile("^[가-힣]+-[1-9][0-9]*(,[가-힣]+-[1-9][0-9]*)*$");
     private final int YEAR = 2023;
     private final int MONTH = 12;
 
     public int readDate() {
         while (true) {
             try {
-                System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
+                System.out.println(Message.PROMPT_DATE.getMessage());
                 String userInput = Console.readLine();
                 validateNonZeroLeadingNumber(userInput);
                 int date = Integer.parseInt(userInput);
                 validateDate(YEAR, MONTH, date);
                 return date;
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+    }
+
+    public String readOrder() {
+        while (true) {
+            try {
+                System.out.println(Message.PROMPT_ORDER.getMessage());
+                String userInput = Console.readLine();
+                validateOrder(userInput);
+                return userInput;
             } catch (IllegalArgumentException exception) {
                 System.out.println(exception.getMessage());
             }
@@ -37,6 +51,12 @@ public class InputView {
         int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         if (date < 1 || date > lastDayOfMonth) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_DATE.getMessage());
+        }
+    }
+
+    private void validateOrder(String userInput) {
+        if (!ORDER_FORM.matcher(userInput).matches()) {
+            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }
     }
 }
