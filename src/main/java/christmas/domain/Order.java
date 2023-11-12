@@ -35,8 +35,8 @@ public class Order {
     }
 
     public void finalizeOrder() {
-        if (isOrderOverLimit() || isBeverageOnly()) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
+        if (orderItems.isEmpty() || isOrderOverLimit() || isBeverageOnly()) {
+            throw new IllegalStateException(Message.ERROR_INVALID_ORDER.getMessage());
         }
     }
 
