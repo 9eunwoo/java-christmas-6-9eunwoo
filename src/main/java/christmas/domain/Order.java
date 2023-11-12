@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.constant.Message;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -22,6 +23,10 @@ public class Order {
             throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }
         this.orderItems.put(item, quantity);
+    }
+
+    public Map<MenuItem, Integer> getOrderItems() {
+        return Collections.unmodifiableMap(orderItems);
     }
 
     public int getTotalPrice() {
