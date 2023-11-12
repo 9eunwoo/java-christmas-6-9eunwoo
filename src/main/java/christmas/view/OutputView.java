@@ -6,6 +6,10 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class OutputView {
+    public void printWelcomeMessage() {
+        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
+    }
+
     public void printEventDetails(EventDetailsDTO eventDetailsDTO, Calendar calendar) {
         int month = calendar.get(Calendar.MONTH) + 1; // Calendar.MONTH starts from 0
         int date = calendar.get(Calendar.DATE);
