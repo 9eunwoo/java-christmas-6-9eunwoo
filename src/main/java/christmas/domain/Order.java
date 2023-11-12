@@ -7,12 +7,17 @@ import java.util.Map;
 public class Order {
     private static final int MAX_ORDER_QUANTITY = 20;
     private final Map<MenuItem, Integer> orderItems;
+    private boolean isFinalized;
 
     public Order() {
         this.orderItems = new EnumMap<>(MenuItem.class);
+        this.isFinalized = false;
     }
 
     public void addItem(MenuItem item, int quantity) {
+        if (isFinalized) {
+            throw new IllegalStateException(Message.ERROR_INVALID_ORDER.getMessage());
+        }
         if (orderItems.containsKey(item) || quantity <= 0) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }
@@ -38,6 +43,7 @@ public class Order {
         if (orderItems.isEmpty() || isOrderOverLimit() || isBeverageOnly()) {
             throw new IllegalStateException(Message.ERROR_INVALID_ORDER.getMessage());
         }
+        isFinalized = true;
     }
 
     private boolean isOrderOverLimit() {
