@@ -61,6 +61,21 @@ public class OrderTest {
                 .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
     }
 
+    @DisplayName("주문 완료 후 주문 추가 시, 예외를 발생시키는지 테스트")
+    @Test
+    void addItem_ShouldThrowException_WhenOrderFinalized() {
+        // given
+        MenuItem item = MenuItem.MUSHROOM_SOUP;
+        int quantity = 2;
+        order.addItem(item, quantity);
+        order.finalizeOrder();
+
+        // when & then
+        assertThatThrownBy(() -> order.addItem(item, quantity))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+    }
+
     @DisplayName("주문한 메뉴의 총 수량이 20개를 초과할 경우, 예외를 발생시키는지 테스트")
     @Test
     void finalizeOrder_ShouldThrowException_WhenTotalQuantityIsOverTwenty() {
