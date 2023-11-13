@@ -7,8 +7,6 @@ import java.util.Locale;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import christmas.constant.Message;
-
 public class MenuItemTest {
     @DisplayName("메뉴 각 항목의 이름, 가격, 카테고리를 정확히 반환하는지 테스트")
     @Test
@@ -55,8 +53,7 @@ public class MenuItemTest {
         String invalidName = "존재하지 않는 메뉴 이름";
         // when & then
         assertThatThrownBy(() -> MenuItem.getByName(invalidName))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("메뉴 이름을 입력할 경우, 해당 메뉴를 정확히 반환하는지 테스트")

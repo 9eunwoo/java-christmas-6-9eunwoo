@@ -1,7 +1,6 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.constant.Message;
 import java.util.regex.Pattern;
 import java.util.Calendar;
 
@@ -14,13 +13,14 @@ public class InputView {
     public Calendar getCalendarForInputDate() {
         while (true) {
             try {
-                System.out.println(Message.PROMPT_DATE.getMessage());
+                System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
                 String userInput = Console.readLine();
                 validateNonZeroLeadingUpToTwoDigits(userInput);
                 int date = Integer.parseInt(userInput);
                 return getValidCalendar(date);
-            } catch (IllegalArgumentException exception) {
-                System.out.println(exception.getMessage());
+            } catch (IllegalArgumentException dateException) {
+                System.out.println("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+                System.out.println(dateException.getMessage());
             }
         }
     }
@@ -28,19 +28,21 @@ public class InputView {
     public String readOrderInput() {
         while (true) {
             try {
-                System.out.println(Message.PROMPT_ORDER.getMessage());
+                System.out.println(
+                        "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
                 String userInput = Console.readLine();
                 validateOrderInput(userInput);
                 return userInput;
-            } catch (IllegalArgumentException exception) {
-                System.out.println(exception.getMessage());
+            } catch (IllegalArgumentException orderInputException) {
+                System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                System.out.println(orderInputException.getMessage());
             }
         }
     }
 
     private void validateNonZeroLeadingUpToTwoDigits(String userInput) {
         if (!NON_ZERO_LEADING_UP_TO_TWO_DIGITS.matcher(userInput).matches()) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_DATE.getMessage());
+            throw new IllegalArgumentException("[ERROR] 2자리 이하의 자연수만 입력 가능합니다.");
         }
     }
 
@@ -49,14 +51,14 @@ public class InputView {
         calendar.set(YEAR, MONTH, date);
         int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         if (date < 1 || date > lastDayOfMonth) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_DATE.getMessage());
+            throw new IllegalArgumentException("[ERROR] 날짜는 1일부터 31일 사이로 입력해 주세요.");
         }
         return calendar;
     }
 
     private void validateOrderInput(String userInput) {
         if (!ORDER_FORM.matcher(userInput).matches()) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
+            throw new IllegalArgumentException("[ERROR] 주문 형식이 올바르지 않습니다.");
         }
     }
 }

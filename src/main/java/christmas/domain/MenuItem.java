@@ -1,7 +1,5 @@
 package christmas.domain;
 
-import christmas.constant.Message;
-
 public enum MenuItem {
     // 애피타이저
     MUSHROOM_SOUP("양송이수프", 6_000, Category.APPETIZER),
@@ -50,6 +48,6 @@ public enum MenuItem {
                 return item;
             }
         }
-        throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴 이름입니다.");
     }
 }

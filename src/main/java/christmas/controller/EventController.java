@@ -37,8 +37,10 @@ public class EventController {
                 String orderInput = inputView.readOrderInput();
                 return orderService.createOrder(orderInput);
             } catch (IllegalArgumentException orderAddtionException) {
+                System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
                 System.out.println(orderAddtionException.getMessage());
             } catch (IllegalStateException orderFinalizationException) {
+                System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
                 System.out.println(orderFinalizationException.getMessage());
             }
         }

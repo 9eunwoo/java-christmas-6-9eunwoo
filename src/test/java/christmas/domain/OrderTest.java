@@ -8,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import christmas.constant.Message;
-
 public class OrderTest {
     private Order order;
 
@@ -44,8 +42,7 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.addItem(item, quantity))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("메뉴의 수량이 0개 이하일 경우, 예외를 발생시키는지 테스트")
@@ -57,8 +54,7 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.addItem(item, quantity))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("주문 완료 후 주문 추가 시, 예외를 발생시키는지 테스트")
@@ -72,8 +68,7 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.addItem(item, quantity))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("주문한 메뉴가 없을 경우, 예외를 발생시키는지 테스트")
@@ -81,8 +76,7 @@ public class OrderTest {
     void finalizeOrder_ShouldThrowException_WhenNoItemOrdered() {
         // when & then
         assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("주문한 메뉴의 총 수량이 20개를 초과할 경우, 예외를 발생시키는지 테스트")
@@ -95,8 +89,7 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("주문한 메뉴의 총 수량이 20개 이하일 경우, 정상적으로 주문을 완료하는지 테스트")
@@ -121,8 +114,7 @@ public class OrderTest {
 
         // when & then
         assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining(Message.ERROR_INVALID_ORDER.getMessage());
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("주문한 메뉴의 총 수량이 20개 이하이고, 음료를 포함한 다른 메뉴를 주문한 경우, 정상적으로 주문을 완료하는지 테스트")

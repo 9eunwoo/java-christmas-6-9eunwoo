@@ -1,6 +1,5 @@
 package christmas.domain;
 
-import christmas.constant.Message;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
@@ -17,10 +16,13 @@ public class Order {
 
     public void addItem(MenuItem item, int quantity) {
         if (isFinalized) {
-            throw new IllegalStateException(Message.ERROR_INVALID_ORDER.getMessage());
+            throw new IllegalStateException("[ERROR] 이미 주문이 완료되었습니다. 추가 주문은 불가능합니다.");
         }
-        if (orderItems.containsKey(item) || quantity <= 0) {
-            throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("[ERROR] 주문 수량은 1개 이상이어야 합니다.");
+        }
+        if (orderItems.containsKey(item)) {
+            throw new IllegalArgumentException("[ERROR] 중복된 메뉴를 주문할 수 없습니다.");
         }
         this.orderItems.put(item, quantity);
     }
@@ -45,8 +47,14 @@ public class Order {
     }
 
     public void finalizeOrder() {
-        if (orderItems.isEmpty() || isOrderOverLimit() || isBeverageOnly()) {
-            throw new IllegalStateException(Message.ERROR_INVALID_ORDER.getMessage());
+        if (orderItems.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 주문할 메뉴가 없습니다.");
+        }
+        if (isOrderOverLimit()) {
+            throw new IllegalStateException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.]");
+        }
+        if (isBeverageOnly()) {
+            throw new IllegalStateException("[ERROR] 음료만 주문할 수 없습니다.");
         }
         isFinalized = true;
     }

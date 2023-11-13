@@ -72,16 +72,13 @@ public class OutputView {
                     THOUSANDS_COMMA.format(eventDetailsDTO.christmasDDayDiscount()));
         }
         if (eventDetailsDTO.weekdayDiscount() != 0) {
-            System.out.printf("평일 할인: -%s원%n",
-                    THOUSANDS_COMMA.format(eventDetailsDTO.weekdayDiscount()));
+            System.out.printf("평일 할인: -%s원%n", THOUSANDS_COMMA.format(eventDetailsDTO.weekdayDiscount()));
         }
         if (eventDetailsDTO.weekendDiscount() != 0) {
-            System.out.printf("주말 할인: -%s원%n",
-                    THOUSANDS_COMMA.format(eventDetailsDTO.weekendDiscount()));
+            System.out.printf("주말 할인: -%s원%n", THOUSANDS_COMMA.format(eventDetailsDTO.weekendDiscount()));
         }
         if (eventDetailsDTO.specialDiscount() != 0) {
-            System.out.printf("특별 할인: -%s원%n",
-                    THOUSANDS_COMMA.format(eventDetailsDTO.specialDiscount()));
+            System.out.printf("특별 할인: -%s원%n", THOUSANDS_COMMA.format(eventDetailsDTO.specialDiscount()));
         }
     }
 
