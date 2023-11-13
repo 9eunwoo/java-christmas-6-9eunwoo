@@ -20,7 +20,7 @@ public enum MenuItem {
     RED_WINE("레드와인", 60_000, Category.BEVERAGE),
     CHAMPAGNE("샴페인", 25_000, Category.BEVERAGE),
     // 없음
-    NONE(null, 0, null);
+    NONE("*없음*", 0, null);
 
     private final String name;
     private final int price;
