@@ -24,15 +24,22 @@ public class EventController {
     public void start() {
         outputView.printWelcomeMessage();
         Calendar calendar = inputView.getCalendarForInputDate();
+
+        Order order = handleOrderCreation();
+
+        EventDetailsDTO eventDetailsDTO = eventService.getEventDetails(calendar, order);
+        outputView.printEventDetails(eventDetailsDTO);
+    }
+
+    private Order handleOrderCreation() {
         while (true) {
             try {
                 String orderInput = inputView.readOrderInput();
-                Order order = orderService.createOrder(orderInput);
-                EventDetailsDTO eventDetailsDTO = eventService.getEventDetails(calendar, order);
-                outputView.printEventDetails(eventDetailsDTO);
-                return;
-            } catch (IllegalArgumentException | IllegalStateException exception) {
-                System.out.println(exception.getMessage());
+                return orderService.createOrder(orderInput);
+            } catch (IllegalArgumentException orderAddtionException) {
+                System.out.println(orderAddtionException.getMessage());
+            } catch (IllegalStateException orderFinalizationException) {
+                System.out.println(orderFinalizationException.getMessage());
             }
         }
     }
