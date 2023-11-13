@@ -12,10 +12,10 @@ import java.util.Map;
 public class EventService {
     private static final int EVENT_THRESHOLD = 10_000;
 
-    public EventDetailsDTO getEventDetails(Order order, Calendar calendar) {
+    public EventDetailsDTO getEventDetails(Calendar calendar, Order order) {
         Map<MenuItem, Integer> orderItems = order.getOrderItems();
         int totalPrice = order.getTotalPrice();
-        EventDetailsDTO.Builder builder = new EventDetailsDTO.Builder(orderItems, totalPrice);
+        EventDetailsDTO.Builder builder = new EventDetailsDTO.Builder(calendar, orderItems, totalPrice);
         if (totalPrice < EVENT_THRESHOLD) {
             return builder.build();
         }

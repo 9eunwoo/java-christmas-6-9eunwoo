@@ -4,7 +4,7 @@ import christmas.domain.MenuItem;
 import christmas.domain.Order;
 
 public class OrderService {
-    public Order takeOrder(String orderInput) {
+    public Order createOrder(String orderInput) {
         Order order = new Order();
         String[] menuEntries = orderInput.split(",");
         for (String menuEntry : menuEntries) {

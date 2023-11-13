@@ -12,10 +12,8 @@ public class OutputView {
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
     }
 
-    public void printEventDetails(EventDetailsDTO eventDetailsDTO, Calendar calendar) {
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int date = calendar.get(Calendar.DATE);
-        System.out.printf("%d월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n%n", month, date);
+    public void printEventDetails(EventDetailsDTO eventDetailsDTO) {
+        printEventPreviewMessage(eventDetailsDTO);
         printOrderItems(eventDetailsDTO);
         printTotalPrice(eventDetailsDTO);
         printGiftItem(eventDetailsDTO);
@@ -23,6 +21,11 @@ public class OutputView {
         printTotalBenefit(eventDetailsDTO);
         printNetPrice(eventDetailsDTO);
         printEventBadge(eventDetailsDTO);
+    }
+
+    private void printEventPreviewMessage(EventDetailsDTO eventDetailsDTO) {
+        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n%n",
+                eventDetailsDTO.getCalendar().get(Calendar.DATE));
     }
 
     private void printOrderItems(EventDetailsDTO eventDetailsDTO) {

@@ -9,7 +9,6 @@ import christmas.view.OutputView;
 import java.util.Calendar;
 
 public class EventController {
-    private final int YEAR = 2023;
     private final EventService eventService;
     private final OrderService orderService;
     private final InputView inputView;
@@ -24,15 +23,13 @@ public class EventController {
 
     public void start() {
         outputView.printWelcomeMessage();
-        int date = inputView.readDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(YEAR, Calendar.DECEMBER, date);
+        Calendar calendar = inputView.getCalendarForInputDate();
         while (true) {
             try {
-                String orderInput = inputView.readOrder();
-                Order order = orderService.takeOrder(orderInput);
-                EventDetailsDTO eventDetailsDTO = eventService.getEventDetails(order, calendar);
-                outputView.printEventDetails(eventDetailsDTO, calendar);
+                String orderInput = inputView.readOrderInput();
+                Order order = orderService.createOrder(orderInput);
+                EventDetailsDTO eventDetailsDTO = eventService.getEventDetails(calendar, order);
+                outputView.printEventDetails(eventDetailsDTO);
                 return;
             } catch (IllegalArgumentException | IllegalStateException exception) {
                 System.out.println(exception.getMessage());

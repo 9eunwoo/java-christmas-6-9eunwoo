@@ -6,31 +6,31 @@ import java.util.regex.Pattern;
 import java.util.Calendar;
 
 public class InputView {
-    private final Pattern NON_ZERO_LEADING_NUMBER = Pattern.compile("^[1-9][0-9]*$");
-    private final Pattern ORDER_FORM = Pattern.compile("^[가-힣]+-[1-9][0-9]*(,[가-힣]+-[1-9][0-9]*)*$");
-    private final int YEAR = 2023;
+    private static final int YEAR = 2023;
+    private static final int MONTH = Calendar.DECEMBER;
+    private static final Pattern NON_ZERO_LEADING_UP_TO_TWO_DIGITS = Pattern.compile("^[1-9][0-9]?$");
+    private static final Pattern ORDER_FORM = Pattern.compile("^[가-힣]+-[1-9][0-9]*(,[가-힣]+-[1-9][0-9]*)*$");
 
-    public int readDate() {
+    public Calendar getCalendarForInputDate() {
         while (true) {
             try {
                 System.out.println(Message.PROMPT_DATE.getMessage());
                 String userInput = Console.readLine();
-                validateNonZeroLeadingNumber(userInput);
+                validateNonZeroLeadingUpToTwoDigits(userInput);
                 int date = Integer.parseInt(userInput);
-                validateDate(YEAR, Calendar.DECEMBER, date);
-                return date;
+                return getValidCalendar(date);
             } catch (IllegalArgumentException exception) {
                 System.out.println(exception.getMessage());
             }
         }
     }
 
-    public String readOrder() {
+    public String readOrderInput() {
         while (true) {
             try {
                 System.out.println(Message.PROMPT_ORDER.getMessage());
                 String userInput = Console.readLine();
-                validateOrder(userInput);
+                validateOrderInput(userInput);
                 return userInput;
             } catch (IllegalArgumentException exception) {
                 System.out.println(exception.getMessage());
@@ -38,22 +38,23 @@ public class InputView {
         }
     }
 
-    private void validateNonZeroLeadingNumber(String userInput) {
-        if (!NON_ZERO_LEADING_NUMBER.matcher(userInput).matches()) {
+    private void validateNonZeroLeadingUpToTwoDigits(String userInput) {
+        if (!NON_ZERO_LEADING_UP_TO_TWO_DIGITS.matcher(userInput).matches()) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_DATE.getMessage());
         }
     }
 
-    private void validateDate(int year, int month, int date) {
+    private Calendar getValidCalendar(int date) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, date);
+        calendar.set(YEAR, MONTH, date);
         int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         if (date < 1 || date > lastDayOfMonth) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_DATE.getMessage());
         }
+        return calendar;
     }
 
-    private void validateOrder(String userInput) {
+    private void validateOrderInput(String userInput) {
         if (!ORDER_FORM.matcher(userInput).matches()) {
             throw new IllegalArgumentException(Message.ERROR_INVALID_ORDER.getMessage());
         }

@@ -3,9 +3,11 @@ package christmas.dto;
 import christmas.domain.EventBadge;
 import christmas.domain.GiftItem;
 import christmas.domain.MenuItem;
+import java.util.Calendar;
 import java.util.Map;
 
 public class EventDetailsDTO {
+    private final Calendar calendar;
     private final Map<MenuItem, Integer> orderItems;
     private final int totalPrice;
     private final GiftItem giftItem;
@@ -18,6 +20,7 @@ public class EventDetailsDTO {
     private final EventBadge eventBadge;
 
     private EventDetailsDTO(Builder builder) {
+        this.calendar = builder.calendar;
         this.orderItems = builder.orderItems;
         this.totalPrice = builder.totalPrice;
         this.giftItem = builder.giftItem;
@@ -28,6 +31,10 @@ public class EventDetailsDTO {
         this.totalDiscount = builder.totalDiscount;
         this.totalBenefit = builder.totalBenefit;
         this.eventBadge = builder.eventBadge;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
     }
 
     public Map<MenuItem, Integer> getOrderItems() {
@@ -71,6 +78,7 @@ public class EventDetailsDTO {
     }
 
     public static class Builder {
+        private final Calendar calendar;
         private final Map<MenuItem, Integer> orderItems;
         private final int totalPrice;
 
@@ -83,7 +91,8 @@ public class EventDetailsDTO {
         private int totalBenefit = 0;
         private EventBadge eventBadge = EventBadge.NONE;
 
-        public Builder(Map<MenuItem, Integer> orderItems, int totalPrice) {
+        public Builder(Calendar calendar, Map<MenuItem, Integer> orderItems, int totalPrice) {
+            this.calendar = calendar;
             this.orderItems = orderItems;
             this.totalPrice = totalPrice;
         }
