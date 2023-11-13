@@ -1,7 +1,7 @@
 package christmas.domain;
 
 public enum GiftItem {
-    NONE(null, 0, 0),
+    NONE(MenuItem.NONE, 0, 0),
     CHAMPAGNE(MenuItem.CHAMPAGNE, 1, 120_000);
 
     private final MenuItem item;
