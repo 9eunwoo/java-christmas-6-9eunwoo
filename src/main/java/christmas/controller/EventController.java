@@ -27,7 +27,7 @@ public class EventController {
         this.outputView = new OutputView();
     }
 
-    public void start() {
+    public void processEventDetails() {
         outputView.printWelcomeMessage();
         Calendar calendar = createValidCalendarFromUserInput();
         Order order = createValidOrderFromUserInput();
