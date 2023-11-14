@@ -15,16 +15,13 @@ public class Order {
     }
 
     public void addItem(MenuItem item, int quantity) {
-        if (isFinalized) {
-            throw new IllegalStateException("[ERROR] 이미 주문이 완료되었습니다. 추가 주문은 불가능합니다.");
-        }
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("[ERROR] 주문 수량은 1개 이상이어야 합니다.");
-        }
-        if (orderItems.containsKey(item)) {
-            throw new IllegalArgumentException("[ERROR] 중복된 메뉴를 주문할 수 없습니다.");
-        }
+        validateAddItem(item, quantity);
         this.orderItems.put(item, quantity);
+    }
+
+    public void finalizeOrder() {
+        validateFinalizeOrder();
+        isFinalized = true;
     }
 
     public Map<MenuItem, Integer> getOrderItems() {
@@ -46,7 +43,19 @@ public class Order {
                 .sum();
     }
 
-    public void finalizeOrder() {
+    private void validateAddItem(MenuItem item, int quantity) {
+        if (isFinalized) {
+            throw new IllegalStateException("[ERROR] 이미 주문이 완료되었습니다. 추가 주문은 불가능합니다.");
+        }
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("[ERROR] 주문 수량은 1개 이상이어야 합니다.");
+        }
+        if (orderItems.containsKey(item)) {
+            throw new IllegalArgumentException("[ERROR] 중복된 메뉴를 주문할 수 없습니다.");
+        }
+    }
+
+    private void validateFinalizeOrder() {
         if (orderItems.isEmpty()) {
             throw new IllegalStateException("[ERROR] 주문할 메뉴가 없습니다.");
         }
@@ -56,7 +65,6 @@ public class Order {
         if (isBeverageOnly()) {
             throw new IllegalStateException("[ERROR] 음료만 주문할 수 없습니다.");
         }
-        isFinalized = true;
     }
 
     private boolean isOrderOverLimit() {
