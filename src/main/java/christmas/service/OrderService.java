@@ -2,23 +2,28 @@ package christmas.service;
 
 import christmas.domain.MenuItem;
 import christmas.domain.Order;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderService {
-    public Order createOrder(String orderInput) {
+    public Order createOrder(Map<MenuItem, Integer> orderItems) {
         Order order = new Order();
-        String[] menuEntries = orderInput.split(",");
-        for (String menuEntry : menuEntries) {
-            addItemToOrder(order, menuEntry);
-        }
+        orderItems.forEach(order::addItem);
         order.finalizeOrder();
         return order;
     }
 
-    private void addItemToOrder(Order order, String menuEntry) {
-        String[] menuDetails = menuEntry.split("-");
-        String menuName = menuDetails[0];
-        int quantity = Integer.parseInt(menuDetails[1]);
-        MenuItem menuItem = MenuItem.getByName(menuName);
-        order.addItem(menuItem, quantity);
+    public Map<MenuItem, Integer> parseOrderInput(String orderInput) {
+        Map<MenuItem, Integer> orderItems = new HashMap<>();
+        Arrays.stream(orderInput.split(","))
+                .forEach(menuEntry -> {
+                    String[] menuDetails = menuEntry.split("-");
+                    String menuName = menuDetails[0];
+                    int quantity = Integer.parseInt(menuDetails[1]);
+                    MenuItem menuItem = MenuItem.getByName(menuName);
+                    orderItems.put(menuItem, quantity);
+                });
+        return orderItems;
     }
 }

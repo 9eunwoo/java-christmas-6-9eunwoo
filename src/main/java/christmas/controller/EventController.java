@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.MenuItem;
 import christmas.domain.Order;
 import christmas.dto.EventDetailsDTO;
 import christmas.service.EventService;
@@ -7,6 +8,7 @@ import christmas.service.OrderService;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.Calendar;
+import java.util.Map;
 
 public class EventController {
     private final EventService eventService;
@@ -35,7 +37,9 @@ public class EventController {
         while (true) {
             try {
                 String orderInput = inputView.readOrderInput();
-                return orderService.createOrder(orderInput);
+
+                Map<MenuItem, Integer> orderItems = orderService.parseOrderInput(orderInput);
+                return orderService.createOrder(orderItems);
             } catch (IllegalArgumentException orderAddtionException) {
                 System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
                 System.out.println(orderAddtionException.getMessage());
