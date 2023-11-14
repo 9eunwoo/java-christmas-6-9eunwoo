@@ -3,7 +3,7 @@ package christmas.service;
 import christmas.domain.MenuItem;
 import christmas.domain.Order;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class OrderService {
@@ -15,7 +15,7 @@ public class OrderService {
     }
 
     public Map<MenuItem, Integer> parseOrderInput(String orderInput) {
-        Map<MenuItem, Integer> orderItems = new HashMap<>();
+        Map<MenuItem, Integer> orderItems = new EnumMap<>(MenuItem.class);
         Arrays.stream(orderInput.split(","))
                 .forEach(menuEntry -> {
                     String[] menuDetails = menuEntry.split("-");
