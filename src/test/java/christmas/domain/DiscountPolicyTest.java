@@ -24,8 +24,8 @@ public class DiscountPolicyTest {
         Order order = Order.create(orderItems);
         int expectedDiscount = 0;
         expectedDiscount += 1000 + 100 * (dayOfMonth - 1); // 크리스마스 디데이 할인(2023.12.1 ~ 25) 적용 o
-        expectedDiscount += 2023 * order.getTotalQuantityByCategory(Category.DESSERT); // 주중 할인(일~목, 디저트) o
-        expectedDiscount += 2023 * order.getTotalQuantityByCategory(Category.MAIN); // 주말 할인(금~토, 메인) x
+        expectedDiscount += 2023 * order.calculateTotalQuantityByCategory(Category.DESSERT); // 주중 할인(일~목, 디저트) o
+        expectedDiscount += 2023 * order.calculateTotalQuantityByCategory(Category.MAIN); // 주말 할인(금~토, 메인) x
         expectedDiscount += 1000; // 특별 할인(일, 크리스마스) 적용 o
         // when
         int actualDiscount = 0;

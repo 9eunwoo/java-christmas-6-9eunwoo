@@ -20,14 +20,14 @@ public class Order {
         return Collections.unmodifiableMap(orderItems);
     }
 
-    public int getTotalPrice() {
+    public int calculateTotalPrice() {
         return orderItems.entrySet()
                 .stream()
                 .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
                 .sum();
     }
 
-    public int getTotalQuantityByCategory(Category category) {
+    public int calculateTotalQuantityByCategory(Category category) {
         return orderItems.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().getCategory() == category)

@@ -12,9 +12,9 @@ import java.util.Map;
 public class EventService {
     private static final int EVENT_THRESHOLD = 10_000;
 
-    public EventDetailsDTO getEventDetails(Calendar calendar, Order order) {
+    public EventDetailsDTO createEventDetails(Calendar calendar, Order order) {
         Map<MenuItem, Integer> orderItems = order.getOrderItems();
-        int totalPrice = order.getTotalPrice();
+        int totalPrice = order.calculateTotalPrice();
         if (totalPrice < EVENT_THRESHOLD) {
             return EventDetailsDTO.createWithNoBenefit(calendar, orderItems, totalPrice);
         }

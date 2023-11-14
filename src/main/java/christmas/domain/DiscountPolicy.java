@@ -18,7 +18,7 @@ public enum DiscountPolicy {
         public int calculateDiscount(Order order, Calendar calendar) {
             int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
             if (dayOfWeek >= Calendar.SUNDAY && dayOfWeek <= Calendar.THURSDAY) {
-                return 2023 * order.getTotalQuantityByCategory(Category.DESSERT);
+                return 2023 * order.calculateTotalQuantityByCategory(Category.DESSERT);
             }
             return 0;
         }
@@ -28,7 +28,7 @@ public enum DiscountPolicy {
         public int calculateDiscount(Order order, Calendar calendar) {
             int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
             if (dayOfWeek >= Calendar.FRIDAY && dayOfWeek <= Calendar.SATURDAY) {
-                return 2023 * order.getTotalQuantityByCategory(Category.MAIN);
+                return 2023 * order.calculateTotalQuantityByCategory(Category.MAIN);
             }
             return 0;
         }

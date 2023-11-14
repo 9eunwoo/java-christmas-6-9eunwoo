@@ -30,7 +30,7 @@ public class OrderTest {
         // when
         orderItems.put(item, quantity);
         Order order = Order.create(orderItems);
-        int actual = order.getTotalPrice();
+        int actual = order.calculateTotalPrice();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -108,7 +108,7 @@ public class OrderTest {
         Order order = Order.create(orderItems);
 
         // when
-        int actual = order.getTotalQuantityByCategory(Category.APPETIZER);
+        int actual = order.calculateTotalQuantityByCategory(Category.APPETIZER);
 
         // then
         assertThat(actual).isEqualTo(totalAppetizerQuantity);

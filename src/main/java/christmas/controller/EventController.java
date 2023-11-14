@@ -31,7 +31,7 @@ public class EventController {
         outputView.printWelcomeMessage();
         Calendar calendar = createValidCalendarFromUserInput();
         Order order = createValidOrderFromUserInput();
-        EventDetailsDTO eventDetailsDTO = eventService.getEventDetails(calendar, order);
+        EventDetailsDTO eventDetailsDTO = eventService.createEventDetails(calendar, order);
         outputView.printEventDetails(eventDetailsDTO);
     }
 
