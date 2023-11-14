@@ -18,10 +18,10 @@ public class EventService {
         if (totalPrice < EVENT_THRESHOLD) {
             return EventDetailsDTO.createWithNoBenefit(calendar, orderItems, totalPrice);
         }
-        
+
         int totalDiscount = calculateTotalDiscount(order, calendar);
         GiftItem giftItem = GiftItem.fromTotalPrice(totalPrice);
-        int totalBenefit = totalDiscount + (giftItem.getItem().getPrice() * giftItem.getQuantity());
+        int totalBenefit = calcalateTotalBenefit(totalDiscount, giftItem);
         return EventDetailsDTO.createWithBenefit(calendar, orderItems, totalPrice, giftItem,
                 DiscountPolicy.CHRISTMAS_D_DAY_DISCOUNT.calculateDiscount(order, calendar),
                 DiscountPolicy.WEEKDAY_DISCOUNT.calculateDiscount(order, calendar),
@@ -36,5 +36,9 @@ public class EventService {
             totalDiscount += discountPolicy.calculateDiscount(order, calendar);
         }
         return totalDiscount;
+    }
+
+    private int calcalateTotalBenefit(int totalDiscount, GiftItem giftItem) {
+        return totalDiscount + (giftItem.getItem().getPrice() * giftItem.getQuantity());
     }
 }
