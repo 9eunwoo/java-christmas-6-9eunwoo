@@ -4,16 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class OrderTest {
-    private Order order;
+    private Map<MenuItem, Integer> orderItems;
 
     @BeforeEach
     void setUp() {
-        order = new Order();
+        orderItems = new EnumMap<>(MenuItem.class);
     }
 
     @DisplayName("주문한 메뉴의 총 가격을 정확히 계산하는지 테스트")
@@ -25,58 +28,20 @@ public class OrderTest {
         int expected = item.getPrice() * quantity;
 
         // when
-        order.addItem(item, quantity);
+        orderItems.put(item, quantity);
+        Order order = Order.create(orderItems);
         int actual = order.getTotalPrice();
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("중복 메뉴를 주문할 경우, 예외를 발생시키는지 테스트")
-    @Test
-    void addItem_ShouldThrowException_WhenDuplicateItemAdded() {
-        // given
-        MenuItem item = MenuItem.MUSHROOM_SOUP;
-        int quantity = 2;
-        order.addItem(item, quantity);
-
-        // when & then
-        assertThatThrownBy(() -> order.addItem(item, quantity))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("메뉴의 수량이 0개 이하일 경우, 예외를 발생시키는지 테스트")
-    @Test
-    void addItem_ShouldThrowException_WhenQuantityIsZeroOrNegative() {
-        // given
-        MenuItem item = MenuItem.MUSHROOM_SOUP;
-        int quantity = 0;
-
-        // when & then
-        assertThatThrownBy(() -> order.addItem(item, quantity))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("주문 완료 후 주문 추가 시, 예외를 발생시키는지 테스트")
-    @Test
-    void addItem_ShouldThrowException_WhenOrderFinalized() {
-        // given
-        MenuItem item = MenuItem.MUSHROOM_SOUP;
-        int quantity = 2;
-        order.addItem(item, quantity);
-        order.finalizeOrder();
-
-        // when & then
-        assertThatThrownBy(() -> order.addItem(item, quantity))
-                .isInstanceOf(IllegalStateException.class);
-    }
-
     @DisplayName("주문한 메뉴가 없을 경우, 예외를 발생시키는지 테스트")
     @Test
     void finalizeOrder_ShouldThrowException_WhenNoItemOrdered() {
         // when & then
-        assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> Order.create(orderItems))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("주문한 메뉴의 총 수량이 20개를 초과할 경우, 예외를 발생시키는지 테스트")
@@ -85,11 +50,11 @@ public class OrderTest {
         // given
         MenuItem item = MenuItem.MUSHROOM_SOUP;
         int quantity = 21;
-        order.addItem(item, quantity);
+        orderItems.put(item, quantity);
 
         // when & then
-        assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> Order.create(orderItems))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("주문한 메뉴의 총 수량이 20개 이하일 경우, 정상적으로 주문을 완료하는지 테스트")
@@ -98,10 +63,10 @@ public class OrderTest {
         // given
         MenuItem item = MenuItem.MUSHROOM_SOUP;
         int quantity = 20;
-        order.addItem(item, quantity);
+        orderItems.put(item, quantity);
 
         // when & then
-        assertThatCode(() -> order.finalizeOrder()).doesNotThrowAnyException();
+        assertThatCode(() -> Order.create(orderItems)).doesNotThrowAnyException();
     }
 
     @DisplayName("음료만 주문한 경우, 예외를 발생시키는지 테스트")
@@ -110,11 +75,11 @@ public class OrderTest {
         // given
         MenuItem item = MenuItem.ZERO_COLA;
         int quantity = 20;
-        order.addItem(item, quantity);
+        orderItems.put(item, quantity);
 
         // when & then
-        assertThatThrownBy(() -> order.finalizeOrder())
-                .isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> Order.create(orderItems))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("주문한 메뉴의 총 수량이 20개 이하이고, 음료를 포함한 다른 메뉴를 주문한 경우, 정상적으로 주문을 완료하는지 테스트")
@@ -123,13 +88,13 @@ public class OrderTest {
         // given
         MenuItem item = MenuItem.ZERO_COLA;
         int quantity = 19;
-        order.addItem(item, quantity);
+        orderItems.put(item, quantity);
         item = MenuItem.MUSHROOM_SOUP;
         quantity = 1;
-        order.addItem(item, quantity);
+        orderItems.put(item, quantity);
 
         // when & then
-        assertThatCode(() -> order.finalizeOrder()).doesNotThrowAnyException();
+        assertThatCode(() -> Order.create(orderItems)).doesNotThrowAnyException();
     }
 
     @DisplayName("특정 카테고리에 속하는 음식의 수량을 정확히 계산하는지 테스트")
@@ -137,9 +102,10 @@ public class OrderTest {
     void getTotalQuantityByCategory_ShouldCorrectlyCalculateTotalQuantityByCategory() {
         // given
         int totalAppetizerQuantity = 3;
-        order.addItem(MenuItem.MUSHROOM_SOUP, 2);
-        order.addItem(MenuItem.TAPAS, 1);
-        order.addItem(MenuItem.ZERO_COLA, 3);
+        orderItems.put(MenuItem.MUSHROOM_SOUP, 2);
+        orderItems.put(MenuItem.TAPAS, 1);
+        orderItems.put(MenuItem.ZERO_COLA, 3);
+        Order order = Order.create(orderItems);
 
         // when
         int actual = order.getTotalQuantityByCategory(Category.APPETIZER);

@@ -1,27 +1,19 @@
 package christmas.domain;
 
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.Map;
 
 public class Order {
     private static final int MAX_ORDER_QUANTITY = 20;
     private final Map<MenuItem, Integer> orderItems;
-    private boolean isFinalized;
 
-    public Order() {
-        this.orderItems = new EnumMap<>(MenuItem.class);
-        this.isFinalized = false;
+    private Order(Map<MenuItem, Integer> orderItems) {
+        validate(orderItems);
+        this.orderItems = orderItems;
     }
 
-    public void addItem(MenuItem item, int quantity) {
-        validateAddItem(item, quantity);
-        this.orderItems.put(item, quantity);
-    }
-
-    public void finalizeOrder() {
-        validateFinalizeOrder();
-        isFinalized = true;
+    public static Order create(Map<MenuItem, Integer> orderItems) {
+        return new Order(orderItems);
     }
 
     public Map<MenuItem, Integer> getOrderItems() {
@@ -43,35 +35,23 @@ public class Order {
                 .sum();
     }
 
-    private void validateAddItem(MenuItem item, int quantity) {
-        if (isFinalized) {
-            throw new IllegalStateException("[ERROR] 이미 주문이 완료되었습니다. 추가 주문은 불가능합니다.");
-        }
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("[ERROR] 주문 수량은 1개 이상이어야 합니다.");
-        }
-        if (orderItems.containsKey(item)) {
-            throw new IllegalArgumentException("[ERROR] 중복된 메뉴를 주문할 수 없습니다.");
-        }
-    }
-
-    private void validateFinalizeOrder() {
+    private void validate(Map<MenuItem, Integer> orderItems) {
         if (orderItems.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 주문할 메뉴가 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 주문할 메뉴가 없습니다.");
         }
-        if (isOrderOverLimit()) {
-            throw new IllegalStateException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.]");
+        if (isOrderOverLimit(orderItems)) {
+            throw new IllegalArgumentException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.]");
         }
-        if (isBeverageOnly()) {
-            throw new IllegalStateException("[ERROR] 음료만 주문할 수 없습니다.");
+        if (isBeverageOnly(orderItems)) {
+            throw new IllegalArgumentException("[ERROR] 음료만 주문할 수 없습니다.");
         }
     }
 
-    private boolean isOrderOverLimit() {
+    private boolean isOrderOverLimit(Map<MenuItem, Integer> orderItems) {
         return orderItems.values().stream().mapToInt(Integer::intValue).sum() > MAX_ORDER_QUANTITY;
     }
 
-    private boolean isBeverageOnly() {
+    private boolean isBeverageOnly(Map<MenuItem, Integer> orderItems) {
         return orderItems.keySet().stream().allMatch(item -> item.getCategory() == Category.BEVERAGE);
     }
 }
