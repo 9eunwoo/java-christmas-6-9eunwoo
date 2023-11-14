@@ -3,7 +3,7 @@ package christmas.service;
 import java.util.Calendar;
 
 public class CalendarService {
-    public Calendar getValidCalendar(int year, int month, int date) {
+    public Calendar createValidCalendar(int year, int month, int date) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, 1);
         validateDate(calendar, date);

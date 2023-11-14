@@ -14,9 +14,9 @@ public class OrderService {
         return order;
     }
 
-    public Map<MenuItem, Integer> parseOrderInput(String orderInput) {
+    public Map<MenuItem, Integer> parseOrderForm(String orderForm) {
         Map<MenuItem, Integer> orderItems = new EnumMap<>(MenuItem.class);
-        Arrays.stream(orderInput.split(","))
+        Arrays.stream(orderForm.split(","))
                 .forEach(menuEntry -> {
                     String[] menuDetails = menuEntry.split("-");
                     String menuName = menuDetails[0];
