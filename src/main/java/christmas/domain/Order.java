@@ -54,4 +54,23 @@ public class Order {
     private boolean isBeverageOnly(Map<MenuItem, Integer> orderItems) {
         return orderItems.keySet().stream().allMatch(item -> item.category() == Category.BEVERAGE);
     }
+
+    public static int parseQuantity(String number) {
+        try {
+            int quantity = Integer.parseInt(number);
+            if (quantity < 1) {
+                throw new IllegalArgumentException("[ERROR] 주문 수량은 1개 이상이어야 합니다.");
+            }
+            if (quantity > MAX_ORDER_QUANTITY) {
+                throw new IllegalArgumentException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.]");
+            }
+            return quantity;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 주문 수량은 숫자여야 합니다.");
+        }
+    }
+
+    public static <T> T throwDuplicateMenuException(T quantity1, T quantity2) {
+        throw new IllegalArgumentException("[ERROR] 중복된 메뉴를 주문할 수 없습니다.");
+    }
 }
