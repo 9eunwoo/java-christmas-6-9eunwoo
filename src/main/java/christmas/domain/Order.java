@@ -2,14 +2,20 @@ package christmas.domain;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.HashMap;
 
 public class Order {
     private static final int MAX_ORDER_QUANTITY = 20;
     private final Map<MenuItem, Integer> orderItems;
+    private final int totalPrice;
 
     private Order(Map<MenuItem, Integer> orderItems) {
         validate(orderItems);
-        this.orderItems = orderItems;
+        this.orderItems = new HashMap<>(orderItems);
+        this.totalPrice = orderItems.entrySet()
+                .stream()
+                .mapToInt(entry -> entry.getKey().price() * entry.getValue())
+                .sum();
     }
 
     public static Order create(Map<MenuItem, Integer> orderItems) {
@@ -20,11 +26,8 @@ public class Order {
         return Collections.unmodifiableMap(orderItems);
     }
 
-    public int calculateTotalPrice() {
-        return orderItems.entrySet()
-                .stream()
-                .mapToInt(entry -> entry.getKey().price() * entry.getValue())
-                .sum();
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
     public int calculateTotalQuantityByCategory(Category category) {

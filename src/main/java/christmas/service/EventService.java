@@ -14,7 +14,7 @@ public class EventService {
 
     public EventDetailsDTO createEventDetails(Calendar calendar, Order order) {
         Map<MenuItem, Integer> orderItems = order.getOrderItems();
-        int totalPrice = order.calculateTotalPrice();
+        int totalPrice = order.getTotalPrice();
         if (totalPrice < EVENT_THRESHOLD) {
             return EventDetailsDTO.createWithNoBenefit(calendar, orderItems, totalPrice);
         }

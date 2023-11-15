@@ -30,7 +30,7 @@ public class OrderTest {
         // when
         orderItems.put(item, quantity);
         Order order = Order.create(orderItems);
-        int actual = order.calculateTotalPrice();
+        int actual = order.getTotalPrice();
 
         // then
         assertThat(actual).isEqualTo(expected);
