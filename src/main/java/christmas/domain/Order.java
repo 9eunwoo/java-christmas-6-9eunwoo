@@ -43,7 +43,7 @@ public class Order {
             throw new IllegalArgumentException("[ERROR] 주문할 메뉴가 없습니다.");
         }
         if (isOrderOverLimit(orderItems)) {
-            throw new IllegalArgumentException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.]");
+            throw new IllegalArgumentException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.");
         }
         if (isBeverageOnly(orderItems)) {
             throw new IllegalArgumentException("[ERROR] 음료만 주문할 수 없습니다.");
@@ -65,7 +65,7 @@ public class Order {
                 throw new IllegalArgumentException("[ERROR] 주문 수량은 1개 이상이어야 합니다.");
             }
             if (quantity > MAX_ORDER_QUANTITY) {
-                throw new IllegalArgumentException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.]");
+                throw new IllegalArgumentException("[ERROR] 주문 가능한 수량(20개)을 초과하였습니다.");
             }
             return quantity;
         } catch (NumberFormatException e) {
