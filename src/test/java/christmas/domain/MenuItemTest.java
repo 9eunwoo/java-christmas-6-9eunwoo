@@ -52,7 +52,7 @@ public class MenuItemTest {
         // given
         String invalidName = "존재하지 않는 메뉴 이름";
         // when & then
-        assertThatThrownBy(() -> MenuItem.getByName(invalidName))
+        assertThatThrownBy(() -> MenuItem.fromString(invalidName))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,7 +63,7 @@ public class MenuItemTest {
         String validName = "시저샐러드";
         MenuItem expected = MenuItem.CAESAR_SALAD;
         // when
-        MenuItem actual = MenuItem.getByName(validName);
+        MenuItem actual = MenuItem.fromString(validName);
         // then
         assertThat(actual).isEqualTo(expected);
     }

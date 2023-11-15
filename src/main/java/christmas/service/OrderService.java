@@ -17,7 +17,7 @@ public class OrderService {
         return Arrays.stream(orderForm.split(","))
                 .map(menuEntry -> menuEntry.split("-"))
                 .collect(Collectors.toMap(
-                        menuDetails -> MenuItem.getByName(menuDetails[0]),
+                        menuDetails -> MenuItem.fromString(menuDetails[0]),
                         menuDetails -> Integer.parseInt(menuDetails[1]),
                         this::throwDuplicateMenuException,
                         () -> new EnumMap<>(MenuItem.class)));

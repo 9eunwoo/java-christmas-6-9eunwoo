@@ -1,5 +1,11 @@
 package christmas.domain;
 
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+
 public enum MenuItem {
     // 애피타이저
     MUSHROOM_SOUP("양송이수프", 6_000, Category.APPETIZER),
@@ -38,13 +44,12 @@ public enum MenuItem {
         return category;
     }
 
-    public static MenuItem getByName(String name) {
-        for (MenuItem item : MenuItem.values()) {
-            if (item.name.equals(name)) {
-                return item;
-            }
-        }
-        throw new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴 이름입니다.");
+    private static final Map<String, MenuItem> stringToEnum = Arrays.stream(values())
+            .collect(toMap(Object::toString, menuItem -> menuItem));
+
+    public static MenuItem fromString(String name) {
+        return Optional.ofNullable(stringToEnum.get(name))
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다."));
     }
 
     @Override
