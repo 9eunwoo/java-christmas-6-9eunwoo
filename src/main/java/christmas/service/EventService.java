@@ -19,7 +19,7 @@ public class EventService {
         int weekendDiscount = DiscountPolicy.WEEKEND_DISCOUNT.calculateDiscount(calendar, order);
         int specialDiscount = DiscountPolicy.SPECIAL_DISCOUNT.calculateDiscount(calendar, order);
         int totalDiscount = christmasDDayDiscount + weekdayDiscount + weekendDiscount + specialDiscount;
-        int totalBenefit = calcalateTotalBenefit(totalDiscount, giftItem);
+        int totalBenefit = calculateTotalBenefit(totalDiscount, giftItem);
         EventBadge eventBadge = EventBadge.fromTotalBenefit(totalBenefit);
 
         return new EventDetailsDTO(calendar, orderItems, totalPrice, giftItem,
@@ -27,7 +27,7 @@ public class EventService {
                 totalDiscount, totalBenefit, eventBadge);
     }
 
-    private int calcalateTotalBenefit(int totalDiscount, GiftItem giftItem) {
+    private int calculateTotalBenefit(int totalDiscount, GiftItem giftItem) {
         return totalDiscount + (giftItem.get().price() * giftItem.quantity());
     }
 }
