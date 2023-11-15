@@ -15,10 +15,10 @@ public class OrderService {
 
     private Map<MenuItem, Integer> parseOrderForm(String orderForm) {
         return Arrays.stream(orderForm.split(","))
-                .map(menuEntry -> menuEntry.split("-"))
+                .map(orderEntry -> orderEntry.split("-"))
                 .collect(Collectors.toMap(
-                        menuDetails -> MenuItem.fromString(menuDetails[0]),
-                        menuDetails -> Order.parseQuantity(menuDetails[1]),
+                        orderDetails -> MenuItem.fromString(orderDetails[0]),
+                        orderDetails -> Order.parseQuantity(orderDetails[1]),
                         Order::throwDuplicateMenuException,
                         () -> new EnumMap<>(MenuItem.class)));
     }
