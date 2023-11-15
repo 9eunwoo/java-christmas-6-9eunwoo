@@ -10,32 +10,21 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class EventService {
-    private static final int EVENT_THRESHOLD = 10_000;
-
     public EventDetailsDTO createEventDetails(Calendar calendar, Order order) {
         Map<MenuItem, Integer> orderItems = order.getOrderItems();
         int totalPrice = order.getTotalPrice();
-        if (totalPrice < EVENT_THRESHOLD) {
-            return EventDetailsDTO.createWithNoBenefit(calendar, orderItems, totalPrice);
-        }
-
-        int totalDiscount = calculateTotalDiscount(calendar, order);
         GiftItem giftItem = GiftItem.fromTotalPrice(totalPrice);
+        int christmasDDayDiscount = DiscountPolicy.CHRISTMAS_D_DAY_DISCOUNT.calculateDiscount(calendar, order);
+        int weekdayDiscount = DiscountPolicy.WEEKDAY_DISCOUNT.calculateDiscount(calendar, order);
+        int weekendDiscount = DiscountPolicy.WEEKEND_DISCOUNT.calculateDiscount(calendar, order);
+        int specialDiscount = DiscountPolicy.SPECIAL_DISCOUNT.calculateDiscount(calendar, order);
+        int totalDiscount = christmasDDayDiscount + weekdayDiscount + weekendDiscount + specialDiscount;
         int totalBenefit = calcalateTotalBenefit(totalDiscount, giftItem);
-        return EventDetailsDTO.createWithBenefit(calendar, orderItems, totalPrice, giftItem,
-                DiscountPolicy.CHRISTMAS_D_DAY_DISCOUNT.calculateDiscount(calendar, order),
-                DiscountPolicy.WEEKDAY_DISCOUNT.calculateDiscount(calendar, order),
-                DiscountPolicy.WEEKEND_DISCOUNT.calculateDiscount(calendar, order),
-                DiscountPolicy.SPECIAL_DISCOUNT.calculateDiscount(calendar, order),
-                totalDiscount, totalBenefit, EventBadge.fromTotalBenefit(totalBenefit));
-    }
+        EventBadge eventBadge = EventBadge.fromTotalBenefit(totalBenefit);
 
-    private int calculateTotalDiscount(Calendar calendar, Order order) {
-        int totalDiscount = 0;
-        for (DiscountPolicy discountPolicy : DiscountPolicy.values()) {
-            totalDiscount += discountPolicy.calculateDiscount(calendar, order);
-        }
-        return totalDiscount;
+        return new EventDetailsDTO(calendar, orderItems, totalPrice, giftItem,
+                christmasDDayDiscount, weekdayDiscount, weekendDiscount, specialDiscount,
+                totalDiscount, totalBenefit, eventBadge);
     }
 
     private int calcalateTotalBenefit(int totalDiscount, GiftItem giftItem) {
