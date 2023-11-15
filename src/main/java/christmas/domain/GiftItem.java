@@ -14,11 +14,11 @@ public enum GiftItem {
         this.threshold = threshold;
     }
 
-    public MenuItem getItem() {
+    public MenuItem get() {
         return item;
     }
 
-    public int getQuantity() {
+    public int quantity() {
         return quantity;
     }
 
@@ -27,5 +27,10 @@ public enum GiftItem {
             return CHAMPAGNE;
         }
         return NONE;
+    }
+
+    @Override
+    public String toString() {
+        return item.toString();
     }
 }

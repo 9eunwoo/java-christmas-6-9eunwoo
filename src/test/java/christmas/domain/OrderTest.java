@@ -25,7 +25,7 @@ public class OrderTest {
         // given
         MenuItem item = MenuItem.MUSHROOM_SOUP;
         int quantity = 2;
-        int expected = item.getPrice() * quantity;
+        int expected = item.price() * quantity;
 
         // when
         orderItems.put(item, quantity);

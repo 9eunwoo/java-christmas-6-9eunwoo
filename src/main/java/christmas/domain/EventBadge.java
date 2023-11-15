@@ -14,10 +14,6 @@ public enum EventBadge {
         this.threshold = threshold;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public static EventBadge fromTotalBenefit(int totalBenefit) {
         if (totalBenefit >= SANTA.threshold) {
             return SANTA;
@@ -29,5 +25,10 @@ public enum EventBadge {
             return STAR;
         }
         return NONE;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

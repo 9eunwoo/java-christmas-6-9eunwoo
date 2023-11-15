@@ -39,6 +39,6 @@ public class EventService {
     }
 
     private int calcalateTotalBenefit(int totalDiscount, GiftItem giftItem) {
-        return totalDiscount + (giftItem.getItem().getPrice() * giftItem.getQuantity());
+        return totalDiscount + (giftItem.get().price() * giftItem.getQuantity());
     }
 }

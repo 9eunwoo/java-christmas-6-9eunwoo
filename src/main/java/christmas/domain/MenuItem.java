@@ -30,24 +30,25 @@ public enum MenuItem {
         this.category = category;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getPrice() {
+    public int price() {
         return price;
     }
 
-    public Category getCategory() {
+    public Category category() {
         return category;
     }
 
     public static MenuItem getByName(String name) {
         for (MenuItem item : MenuItem.values()) {
-            if (item.getName().equals(name)) {
+            if (item.name.equals(name)) {
                 return item;
             }
         }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴 이름입니다.");
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

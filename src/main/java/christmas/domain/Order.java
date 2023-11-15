@@ -23,14 +23,14 @@ public class Order {
     public int calculateTotalPrice() {
         return orderItems.entrySet()
                 .stream()
-                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
+                .mapToInt(entry -> entry.getKey().price() * entry.getValue())
                 .sum();
     }
 
     public int calculateTotalQuantityByCategory(Category category) {
         return orderItems.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().getCategory() == category)
+                .filter(entry -> entry.getKey().category() == category)
                 .mapToInt(Map.Entry::getValue)
                 .sum();
     }
@@ -52,6 +52,6 @@ public class Order {
     }
 
     private boolean isBeverageOnly(Map<MenuItem, Integer> orderItems) {
-        return orderItems.keySet().stream().allMatch(item -> item.getCategory() == Category.BEVERAGE);
+        return orderItems.keySet().stream().allMatch(item -> item.category() == Category.BEVERAGE);
     }
 }

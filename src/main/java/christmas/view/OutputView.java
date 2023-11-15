@@ -32,7 +32,7 @@ public class OutputView {
     private void printOrderItems(EventDetailsDTO eventDetailsDTO) {
         System.out.printf("<주문 메뉴>%n");
         eventDetailsDTO.orderItems().forEach(
-                (key, value) -> System.out.printf("%s %s개%n", key.getName(), THOUSANDS_COMMA.format(value)));
+                (name, quantity) -> System.out.printf("%s %s개%n", name, THOUSANDS_COMMA.format(quantity)));
         System.out.println();
     }
 
@@ -48,8 +48,7 @@ public class OutputView {
             System.out.printf("없음%n%n");
             return;
         }
-        System.out.printf("%s %s개%n%n", giftItem.getItem().getName(),
-                THOUSANDS_COMMA.format(giftItem.getQuantity()));
+        System.out.printf("%s %s개%n%n", giftItem, THOUSANDS_COMMA.format(giftItem.quantity()));
     }
 
     private void printBenefits(EventDetailsDTO eventDetailsDTO) {
@@ -90,7 +89,7 @@ public class OutputView {
         GiftItem giftItem = eventDetailsDTO.giftItem();
         if (giftItem != GiftItem.NONE) {
             System.out.printf("증정 이벤트: -%s원%n",
-                    THOUSANDS_COMMA.format(giftItem.getItem().getPrice() * giftItem.getQuantity()));
+                    THOUSANDS_COMMA.format(giftItem.get().price() * giftItem.quantity()));
         }
     }
 
@@ -111,6 +110,6 @@ public class OutputView {
 
     private void printEventBadge(EventDetailsDTO eventDetailsDTO) {
         System.out.printf("<12월 이벤트 배지>%n");
-        System.out.printf("%s%n", eventDetailsDTO.eventBadge().getName());
+        System.out.printf("%s%n", eventDetailsDTO.eventBadge());
     }
 }

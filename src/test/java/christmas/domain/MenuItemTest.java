@@ -28,11 +28,11 @@ public class MenuItemTest {
         // when
         StringBuilder sb = new StringBuilder();
         for (Category category : Category.values()) {
-            sb.append("<").append(category.getName()).append(">\n");
+            sb.append("<").append(category).append(">\n");
             for (MenuItem item : MenuItem.values()) {
-                if (item.getCategory() == category) {
-                    String formattedPrice = String.format(Locale.KOREA, "%,d", item.getPrice());
-                    sb.append(item.getName()).append("(").append(formattedPrice).append("), ");
+                if (item.category() == category) {
+                    String formattedPrice = String.format(Locale.KOREA, "%,d", item.price());
+                    sb.append(item).append("(").append(formattedPrice).append("), ");
                 }
             }
             // 마지막에 나오는 ", "를 제거하기 위해 길이에서 2를 뺌
