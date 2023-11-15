@@ -19,21 +19,21 @@ public class EventService {
             return EventDetailsDTO.createWithNoBenefit(calendar, orderItems, totalPrice);
         }
 
-        int totalDiscount = calculateTotalDiscount(order, calendar);
+        int totalDiscount = calculateTotalDiscount(calendar, order);
         GiftItem giftItem = GiftItem.fromTotalPrice(totalPrice);
         int totalBenefit = calcalateTotalBenefit(totalDiscount, giftItem);
         return EventDetailsDTO.createWithBenefit(calendar, orderItems, totalPrice, giftItem,
-                DiscountPolicy.CHRISTMAS_D_DAY_DISCOUNT.calculateDiscount(order, calendar),
-                DiscountPolicy.WEEKDAY_DISCOUNT.calculateDiscount(order, calendar),
-                DiscountPolicy.WEEKEND_DISCOUNT.calculateDiscount(order, calendar),
-                DiscountPolicy.SPECIAL_DISCOUNT.calculateDiscount(order, calendar),
+                DiscountPolicy.CHRISTMAS_D_DAY_DISCOUNT.calculateDiscount(calendar, order),
+                DiscountPolicy.WEEKDAY_DISCOUNT.calculateDiscount(calendar, order),
+                DiscountPolicy.WEEKEND_DISCOUNT.calculateDiscount(calendar, order),
+                DiscountPolicy.SPECIAL_DISCOUNT.calculateDiscount(calendar, order),
                 totalDiscount, totalBenefit, EventBadge.fromTotalBenefit(totalBenefit));
     }
 
-    private int calculateTotalDiscount(Order order, Calendar calendar) {
+    private int calculateTotalDiscount(Calendar calendar, Order order) {
         int totalDiscount = 0;
         for (DiscountPolicy discountPolicy : DiscountPolicy.values()) {
-            totalDiscount += discountPolicy.calculateDiscount(order, calendar);
+            totalDiscount += discountPolicy.calculateDiscount(calendar, order);
         }
         return totalDiscount;
     }

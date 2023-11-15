@@ -30,7 +30,7 @@ public class DiscountPolicyTest {
         // when
         int actualDiscount = 0;
         for (DiscountPolicy discountPolicy : DiscountPolicy.values()) {
-            actualDiscount += discountPolicy.calculateDiscount(order, calendar);
+            actualDiscount += discountPolicy.calculateDiscount(calendar, order);
         }
         // then
         assertThat(actualDiscount).isEqualTo(expectedDiscount);
