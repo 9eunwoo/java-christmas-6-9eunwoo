@@ -23,7 +23,7 @@ public enum MenuItem {
     RED_WINE("레드와인", 60_000, Category.BEVERAGE),
     CHAMPAGNE("샴페인", 25_000, Category.BEVERAGE),
     // 없음
-    NONE("*없음*", 0, null);
+    NONE("*없음*", 0, Category.UNKNOWN);
 
     private final String name;
     private final int price;
@@ -48,7 +48,7 @@ public enum MenuItem {
 
     public static MenuItem fromString(String name) {
         return Optional.ofNullable(stringToEnum.get(name))
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다: " + name));
     }
 
     @Override
