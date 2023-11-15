@@ -3,7 +3,7 @@ package christmas.domain;
 import java.util.Calendar;
 
 public enum DiscountPolicy {
-    CHRISTMAS_D_DAY_DISCOUNT {
+    CHRISTMAS_D_DAY_DISCOUNT("크리스마스 디데이 할인") {
         @Override
         public int calculateDiscount(Order order, Calendar calendar) {
             int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -13,7 +13,7 @@ public enum DiscountPolicy {
             return 0;
         }
     },
-    WEEKDAY_DISCOUNT {
+    WEEKDAY_DISCOUNT("평일 할인") {
         @Override
         public int calculateDiscount(Order order, Calendar calendar) {
             int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -23,7 +23,7 @@ public enum DiscountPolicy {
             return 0;
         }
     },
-    WEEKEND_DISCOUNT {
+    WEEKEND_DISCOUNT("주말 할인") {
         @Override
         public int calculateDiscount(Order order, Calendar calendar) {
             int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -33,7 +33,7 @@ public enum DiscountPolicy {
             return 0;
         }
     },
-    SPECIAL_DISCOUNT {
+    SPECIAL_DISCOUNT("특별 할인") {
         @Override
         public int calculateDiscount(Order order, Calendar calendar) {
             int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -44,6 +44,17 @@ public enum DiscountPolicy {
             return 0;
         }
     };
+
+    private final String name;
+
+    DiscountPolicy(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 
     public abstract int calculateDiscount(Order order, Calendar calendar);
 }

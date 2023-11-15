@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.domain.DiscountPolicy;
 import christmas.domain.GiftItem;
 import christmas.dto.EventDetailsDTO;
 import java.text.DecimalFormat;
@@ -68,17 +69,20 @@ public class OutputView {
 
     private void printDiscounts(EventDetailsDTO eventDetailsDTO) {
         if (eventDetailsDTO.christmasDDayDiscount() != 0) {
-            System.out.printf("크리스마스 디데이 할인: -%s원%n",
+            System.out.printf(DiscountPolicy.CHRISTMAS_D_DAY_DISCOUNT + ": -%s원%n",
                     THOUSANDS_COMMA.format(eventDetailsDTO.christmasDDayDiscount()));
         }
         if (eventDetailsDTO.weekdayDiscount() != 0) {
-            System.out.printf("평일 할인: -%s원%n", THOUSANDS_COMMA.format(eventDetailsDTO.weekdayDiscount()));
+            System.out.printf(DiscountPolicy.WEEKDAY_DISCOUNT + ": -%s원%n",
+                    THOUSANDS_COMMA.format(eventDetailsDTO.weekdayDiscount()));
         }
         if (eventDetailsDTO.weekendDiscount() != 0) {
-            System.out.printf("주말 할인: -%s원%n", THOUSANDS_COMMA.format(eventDetailsDTO.weekendDiscount()));
+            System.out.printf(DiscountPolicy.WEEKEND_DISCOUNT + ": -%s원%n",
+                    THOUSANDS_COMMA.format(eventDetailsDTO.weekendDiscount()));
         }
         if (eventDetailsDTO.specialDiscount() != 0) {
-            System.out.printf("특별 할인: -%s원%n", THOUSANDS_COMMA.format(eventDetailsDTO.specialDiscount()));
+            System.out.printf(DiscountPolicy.SPECIAL_DISCOUNT + ": -%s원%n",
+                    THOUSANDS_COMMA.format(eventDetailsDTO.specialDiscount()));
         }
     }
 
