@@ -8,17 +8,18 @@ src
 │       └── 🎄 christmas
 │           ├── 🚀 application.java               # 메인 애플리케이션 실행 파일
 │           ├── 🎮 controller
-│           │   └── 🎅 EventController.java       # 크리스마스 이벤트를 관리하는 컨트롤러
+│           │   └── 🕹️ EventController.java       # 크리스마스 이벤트를 관리하는 컨트롤러
 │           ├── 🎯 domain
 │           │   ├── 🏷️ Category.java              # 메뉴 카테고리를 정의하는 열거형
 │           │   ├── 💸 DiscountPolicy.java        # 할인 정책을 정의하는 열거형
-│           │   ├── 🎖️ EventBadge.java            # 이벤트 배지 종류를 정의하는 열거형
+│           │   ├── 🌟 EventBadge.java            # 이벤트 배지 종류를 정의하는 열거형
 │           │   ├── 🎁 GiftItem.java              # 증정 메뉴 항목을 정의하는 열거형
 │           │   ├── 🍽️ MenuItem.java              # 메뉴 아이템을 정의하는 열거형
 │           │   └── 📝 Order.java                 # 주문 처리 관련 로직
 │           ├── 💾 dto
 │           │   └── 📊 EventDetailsDTO.java       # 이벤트 세부 사항을 담는 데이터 전송 객체
-│           ├── service
+│           ├── 💁‍♂️ service
+│           │   ├── 📅 CalendarService.java       # 캘린더 관련 서비스 로직
 │           │   ├── 🎉 EventService.java          # 이벤트 관련 서비스 로직
 │           │   └── 📋 OrderService.java          # 주문 처리 관련 서비스 로직
 │           └── 👀 view
@@ -27,12 +28,16 @@ src
 └── 🧪 test
     └── 🌐 java
         └── 🎄 christmas
+            ├── ✅ ApplicationTest.java
             └── 🎯 domain
-                ├── ✅ DiscountPolicyTest.java    # 할인 정책에 대한 단위 테스트
-                ├── ✅ EventBadgeTest.java        # 이벤트 배지 기능에 대한 단위 테스트
-                ├── ✅ GiftItemTest.java          # 증정 메뉴 기능에 대한 단위 테스트
-                ├── ✅ MenuItemTest.java          # 메뉴 아이템 기능에 대한 단위 테스트
-                └── ✅ OrderTest.java             # 주문 로직에 대한 단위 테스트
+                ├── ✅ DiscountPolicyTest.java
+                ├── ✅ EventBadgeTest.java
+                ├── ✅ GiftItemTest.java
+                ├── ✅ MenuItemTest.java
+                └── ✅ OrderTest.java
+            └── 💁‍♂️ service
+                ├── ✅ CalendarServiceTest.java
+                └── ✅ OrderServiceTest.java
 ```
 
 ## 🚀 기능 목록
@@ -48,9 +53,10 @@ src
 - [x] 주문할 메뉴의 이름과 수량을 입력받는다.
 - [x] 입력 형식이 잘못된 경우 오류 메시지를 출력하고 재입력을 요청한다.
 
-### 🍽️ 메뉴 주문 처리
-- [x] 입력된 메뉴의 이름과 수량은 쉼표(,)로 구분한다.
-- [x] 메뉴 이름과 수량은 대쉬(-)로 구분한다.
+### 🍽️ 메뉴 주문 처리 및 검증
+- [x] 입력된 메뉴 주문 입력을 파싱한다.
+    - [x] 입력된 메뉴의 이름과 수량은 쉼표(,)로 구분한다.
+    - [x] 메뉴 이름과 수량은 대쉬(-)로 구분한다.
 - [x] 총 주문 금액을 계산한다.
 - [x] 각 카테고리별 주문된 음식의 총 수량을 계산한다.
 - [x] 유효하지 않은 주문에 대해 에러 메시지를 출력하고 재입력을 요청한다.
