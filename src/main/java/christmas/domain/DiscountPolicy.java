@@ -47,11 +47,11 @@ public enum DiscountPolicy {
 
     private static final int DISCOUNT_THRESHOLD = 10_000;
     private static final int CHRISTMAS_DAY = 25;
-    private static final int CHRISTMAS_D_DAY_DISCOUNT_BASE = 1000;
+    private static final int CHRISTMAS_D_DAY_DISCOUNT_BASE = 1_000;
     private static final int CHRISTMAS_D_DAY_DISCOUNT_MULTIPLIER = 100;
-    private static final int WEEKDAY_DISCOUNT_MULTIPLIER = 2023;
-    private static final int WEEKEND_DISCOUNT_MULTIPLIER = 2023;
-    private static final int SPECIAL_DAY_DISCOUNT_AMOUNT = 1000;
+    private static final int WEEKDAY_DISCOUNT_MULTIPLIER = 2_023;
+    private static final int WEEKEND_DISCOUNT_MULTIPLIER = 2_023;
+    private static final int SPECIAL_DAY_DISCOUNT_AMOUNT = 1_000;
 
     private final String name;
 
