@@ -40,9 +40,8 @@ public class EventController {
             try {
                 int date = inputView.readDate();
                 return calendarService.createValidCalendar(YEAR, MONTH, date);
-            } catch (IllegalArgumentException e) {
-                System.out.println("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
-                System.out.println(e.getMessage());
+            } catch (IllegalArgumentException dateException) {
+                outputView.printErrorForInvalidDate(dateException.getMessage());
             }
         }
     }
@@ -52,9 +51,8 @@ public class EventController {
             try {
                 String orderForm = inputView.readOrderForm();
                 return orderService.createValidOrder(orderForm);
-            } catch (IllegalArgumentException e) {
-                System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-                System.out.println(e.getMessage());
+            } catch (IllegalArgumentException orderException) {
+                outputView.printErrorForInvalidOrder(orderException.getMessage());
             }
         }
     }
